@@ -44,7 +44,7 @@ void LoadFiles(Dictionary<string, Airline> airlines, Dictionary<string, Boarding
             {
                 string code = daddy[1];
                 string name = daddy[0];
-                Airline airlineobj = new Airline(code, name);
+                Airline airlineobj = new Airline(name, code);
                 // Add the Airline object to the dictionary using its code as the key
                 if (!airlines.ContainsKey(code))
                 {
@@ -135,6 +135,40 @@ void InitData(Dictionary<string, Flight> flights)
 }
 
 //-------------------- End of John's Code ------------------------
+// Task 3
+//----------------------- John's Code ----------------------------
+
+void DisplayFlight(Terminal terminal)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Flights for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine("{0, -15} {1, -20} {2, -20} {3, -17} {4}",
+        "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival");
+
+    foreach (KeyValuePair<string, Flight> crashOut in terminal.Flights)
+    {
+        Flight tempFlight = crashOut.Value;
+
+        // Checks airline name based on flight number
+        string airlineName = "";
+        foreach (KeyValuePair<string, Airline> dietzNutz in terminal.Airlines)
+        {
+            Airline tempAirline = dietzNutz.Value;
+            if (tempFlight.FlightNumber.Contains(tempAirline.Code))
+            {
+                airlineName = tempAirline.Name;
+                break;
+            }
+        }
+
+        Console.WriteLine("{0, -15} {1, -20} {2, -20} {3, -17} {4}",
+            tempFlight.FlightNumber, airlineName, tempFlight.Origin, tempFlight.Destination, tempFlight.ExpectedTime);
+    }
+    Console.WriteLine();
+}
+
+//-------------------- End of John's Code ------------------------
 // Program
 
 //Make the dictionaries to store data
@@ -171,7 +205,11 @@ while (true)
 
     if (option == 1)
     {
-        Console.WriteLine("Not Implemented");
+        DisplayFlight(terminal);
     }
     else if (option == 0) break;
+    else
+    {
+        Console.WriteLine("Please enter a valid option");
+    }
 }

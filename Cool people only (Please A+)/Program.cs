@@ -5,8 +5,8 @@
 //==========================================================
 
 // John: 2, 3, 5, 6, & 9
-// Jun Wei: 1, 4, 7 & 8
 
+using Cool_people_only__Please_A__;
 using GodsPlan;
 using System.Collections.Generic;
 
@@ -71,3 +71,82 @@ void InitData(Dictionary<string, Flight> flights)
 Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
 InitData(flights);
 //----------------------- End of John's Code ---------------------------
+
+//==========================================================
+// Student Number	: S10259166
+// Student Name	: John Gotinga
+// Partner Name	: Yap Jun Wei
+//==========================================================
+
+// Jun Wei: 1, 4, 7 & 8
+
+//----------------------- Jun Wei's Code ----------------------------
+//Task 1
+static void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, BoardingGate> boardingGate)
+{
+    using (StreamReader work = new StreamReader("airlines.csv"))
+    {
+        // Skip header
+        string? please = work.ReadLine();
+
+        while ((please = work.ReadLine()) != null)
+        {
+            //string initialise
+            string[] daddy = please.Split(",");
+            //ensure data has the expected columns
+            if (daddy.Length >= 2)
+            {
+                string code = daddy[1];
+                string name = daddy[0];
+                Airline airlineobj = new Airline(code, name);
+                // Add the Airline object to the dictionary using its code as the key
+                if (!airline.ContainsKey(code))
+                {
+                    airline.Add(code, airlineobj);
+                }
+                else
+                {
+                    Console.WriteLine($"Airline with code {code} already exists in the dictionary.");
+                }
+            }
+        }
+    }
+    using (StreamReader work = new StreamReader("boardinggates.csv"))
+    {
+        // Skip header
+        string? please = work.ReadLine();
+
+        while ((please = work.ReadLine()) != null)
+        {
+            //string initialise
+            string[] babygrunk = please.Split(",");
+            //ensure data has the expected columns
+            if (babygrunk.Length >= 4)
+            {
+                string gate = babygrunk[0];
+                bool DDJB = Convert.ToBoolean(babygrunk[1]);
+                bool CFFT = Convert.ToBoolean(babygrunk[2]);
+                bool LWTT = Convert.ToBoolean(babygrunk[3]);
+                BoardingGate boardingobj = new BoardingGate(gate, DDJB, CFFT, LWTT);
+                // Add the boardingGate object to the dictionary using its code as the key
+                if (!boardingGate.ContainsKey(gate))
+                {
+                    boardingGate.Add(gate, boardingobj);
+                }
+                else
+                {
+                    Console.WriteLine($"BoardingGate with code {gate} already exists in the dictionary.");
+                }
+            }
+        }
+    }
+}
+static void Main(string[] args)
+{
+    //Make the dictionaries to store data
+    Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
+    Dictionary<string, Airline> airline = new Dictionary<string, Airline>();
+    Dictionary<string, BoardingGate> boardingGate = new Dictionary<string, BoardingGate>();
+    LoadFiles(airline, boardingGate);
+}
+//----------------------- End of Jun Wei's Code ---------------------------

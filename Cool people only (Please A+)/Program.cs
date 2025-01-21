@@ -131,38 +131,6 @@ void InitData(Dictionary<string, Flight> flights)
 }
 
 //-------------------- End of John's Code ------------------------
-// Task 3
-//----------------------- John's Code ----------------------------
-void DisplayFlight(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline)
-{
-    Console.WriteLine("=============================================");
-    Console.WriteLine("List of Flights for Changi Airport Terminal 5");
-    Console.WriteLine("=============================================");
-    Console.WriteLine("{0, -15} {1, -20} {2, -18} {3} {4}",
-        "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival");
-
-    foreach (KeyValuePair<string, Flight> crashOut in flights)
-    {
-        Flight tempFlight = crashOut.Value;
-
-        // Checks airline name based on flight number
-        string airlineName = "";
-        foreach (KeyValuePair<string, Airline> dietzNutz in airline)
-        {
-            Airline tempAirline = dietzNutz.Value;
-            if (tempFlight.FlightNumber.Contains(tempAirline.Code))
-            {
-                airlineName = tempAirline.Name;
-                break;
-            }
-        }
-
-        Console.WriteLine("{0, -15} {1, -20} {2, -18} {3} {4}",
-            tempFlight.FlightNumber, airlineName, tempFlight.Origin, tempFlight.Destination, tempFlight.ExpectedTime);
-    }
-}
-
-//-------------------- End of John's Code ------------------------
 // Program
 //--------------------- Jun Wei's Code ---------------------------
 
@@ -176,8 +144,5 @@ LoadFiles(airline, boardingGate);
 //Make the dictionaries to store data
 Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
 InitData(flights);
-
-// Display Flights
-DisplayFlight(flights, airline);
 
 //-------------------- End of John's Code ------------------------

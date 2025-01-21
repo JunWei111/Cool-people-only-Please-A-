@@ -13,7 +13,7 @@ using System.Collections.Generic;
 void DisplayMenu()
 {
     Console.WriteLine("=============================================");
-    Console.WriteLine("Welcome to Changi Airport Terminal a5");
+    Console.WriteLine("Welcome to Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
     Console.WriteLine("1. List All Flights");
     Console.WriteLine("2. List Boarding Gates");
@@ -23,13 +23,12 @@ void DisplayMenu()
     Console.WriteLine("6. Modify Flight Details");
     Console.WriteLine("7. Display Flight Schedule");
     Console.WriteLine("0. Exit");
-
-    Console.WriteLine("\nPlease select your option:");
 }
 
 //Task 1
 //--------------------- Jun Wei's Code ---------------------------
-void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, BoardingGate> boardingGate)
+
+void LoadFiles(Dictionary<string, Airline> airlines, Dictionary<string, BoardingGate> boardingGates)
 {
     using (StreamReader work = new StreamReader("airlines.csv"))
     {
@@ -47,9 +46,9 @@ void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, BoardingG
                 string name = daddy[0];
                 Airline airlineobj = new Airline(code, name);
                 // Add the Airline object to the dictionary using its code as the key
-                if (!airline.ContainsKey(code))
+                if (!airlines.ContainsKey(code))
                 {
-                    airline.Add(code, airlineobj);
+                    airlines.Add(code, airlineobj);
                 }
                 else
                 {
@@ -76,9 +75,9 @@ void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, BoardingG
                 bool LWTT = Convert.ToBoolean(babygrunk[3]);
                 BoardingGate boardingobj = new BoardingGate(gate, DDJB, CFFT, LWTT);
                 // Add the boardingGate object to the dictionary using its code as the key
-                if (!boardingGate.ContainsKey(gate))
+                if (!boardingGates.ContainsKey(gate))
                 {
-                    boardingGate.Add(gate, boardingobj);
+                    boardingGates.Add(gate, boardingobj);
                 }
                 else
                 {
@@ -89,12 +88,10 @@ void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, BoardingG
     }
 }
 
-// Make the dictionaries to store data
-
-
 //------------------ End of Jun Wei's Code -----------------------
 // Task 2
 //----------------------- John's Code ----------------------------
+
 void InitData(Dictionary<string, Flight> flights)
 {
     using (StreamReader work = new StreamReader("flights.csv"))
@@ -106,25 +103,32 @@ void InitData(Dictionary<string, Flight> flights)
         {
             // Splits commas and checks the special request code to make a object
             string[] daddy = please.Split(",");
-            if (daddy[4] == "NORM")
+            if (daddy[4] != "")
             {
-                NORMFlight tempFlight = new NORMFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
-                flights[tempFlight.FlightNumber] = tempFlight;
+                if (daddy[4] == "LWTT")
+                {
+                    LWTTFlight tempFlight = new LWTTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]), daddy[4]);
+                    flights[tempFlight.FlightNumber] = tempFlight;
+                    continue;
+                }
+                else if (daddy[4] == "DDJB")
+                {
+                    DDJBFlight tempFlight = new DDJBFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]), daddy[4]);
+                    flights[tempFlight.FlightNumber] = tempFlight;
+                    continue;
+                }
+                else if (daddy[4] == "CFFT")
+                {
+                    CFFTFlight tempFlight = new CFFTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]), daddy[4]);
+                    flights[tempFlight.FlightNumber] = tempFlight;
+                    continue;
+                }
             }
-            else if (daddy[4] == "LWTT")
+            else
             {
-                LWTTFlight tempFlight = new LWTTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
+                NORMFlight tempFlight = new NORMFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]), daddy[4]);
                 flights[tempFlight.FlightNumber] = tempFlight;
-            }
-            else if (daddy[4] == "DDJB")
-            {
-                DDJBFlight tempFlight = new DDJBFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
-                flights[tempFlight.FlightNumber] = tempFlight;
-            }
-            else if (daddy[4] == "CFFT")
-            {
-                CFFTFlight tempFlight = new CFFTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
-                flights[tempFlight.FlightNumber] = tempFlight;
+                continue;
             }
         }
     }
@@ -132,17 +136,42 @@ void InitData(Dictionary<string, Flight> flights)
 
 //-------------------- End of John's Code ------------------------
 // Program
-//--------------------- Jun Wei's Code ---------------------------
-
-Dictionary<string, Airline> airline = new Dictionary<string, Airline>();
-Dictionary<string, BoardingGate> boardingGate = new Dictionary<string, BoardingGate>();
-LoadFiles(airline, boardingGate);
-
-//------------------ End of Jun Wei's Code -----------------------
-//----------------------- John's Code ----------------------------
 
 //Make the dictionaries to store data
+Dictionary<string, Airline> airlines = new Dictionary<string, Airline>();
+Dictionary<string, BoardingGate> boardingGates = new Dictionary<string, BoardingGate>();
+LoadFiles(airlines, boardingGates);
 Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
 InitData(flights);
 
-//-------------------- End of John's Code ------------------------
+// Store all Dictionaries into a Terminal class
+Terminal terminal = new Terminal("Terminal 5", airlines, flights, boardingGates);
+
+// Display menu
+while (true)
+{
+    DisplayMenu();
+
+    int option = 0;
+    try
+    {
+        Console.WriteLine("\nPlease select your option:");
+        option = Convert.ToInt32(Console.ReadLine());
+    }
+    catch (FormatException ex)
+    {
+        Console.WriteLine("Please enter a number");
+        continue;
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+        continue;
+    }
+
+    if (option == 1)
+    {
+        Console.WriteLine("Not Implemented");
+    }
+    else if (option == 0) break;
+}

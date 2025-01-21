@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cool_people_only__Please_A__;
+namespace Cool_people_only__Please_A__
 {
-    class Flight
+    abstract class Flight
     {
         // Create parameters
         public string FlightNumber { get; set; }
@@ -54,10 +54,7 @@ namespace Cool_people_only__Please_A__;
         }
 
         // Methods
-        public double CalculateFees()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract double CalculateFees();
 
         public override string ToString()
         {
@@ -91,7 +88,7 @@ namespace Cool_people_only__Please_A__;
         }
 
         // Methods
-        public double CalculateFees()
+        public override double CalculateFees()
         {
             throw new NotImplementedException();
         }
@@ -150,7 +147,7 @@ namespace Cool_people_only__Please_A__;
         }
 
         // Methods
-        public double CalculateFees()
+        public override double CalculateFees()
         {
             throw new NotImplementedException();
         }
@@ -209,7 +206,7 @@ namespace Cool_people_only__Please_A__;
         }
 
         // Methods
-        public double CalculateFees()
+        public override double CalculateFees()
         {
             throw new NotImplementedException();
         }
@@ -268,7 +265,7 @@ namespace Cool_people_only__Please_A__;
         }
 
         // Methods
-        public double CalculateFees()
+        public override double CalculateFees()
         {
             throw new NotImplementedException();
         }

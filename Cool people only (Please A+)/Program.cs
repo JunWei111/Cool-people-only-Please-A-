@@ -192,6 +192,7 @@ void AssignBoardingGateToFlight(Terminal terminal)
         Console.WriteLine("Please enter your Flight Number:");
         string? flightNum = Console.ReadLine();
 
+        flightNum = flightNum.Trim();
         // Checks to see if whitespace is present. If none, adds in whitespace
         if (!flightNum.Contains(" "))
         {
@@ -352,6 +353,7 @@ void AddNewFlight(Terminal terminal)
         string flightNumber = Console.ReadLine();
 
         // Formats flight number
+        flightNumber = flightNumber.Trim();
         if (!flightNumber.Contains(" "))
         {
             flightNumber = flightNumber.Substring(0, 2) + " " + flightNumber.Substring(2);
@@ -359,16 +361,21 @@ void AddNewFlight(Terminal terminal)
         flightNumber = flightNumber.ToUpper();
 
 
-        // Checks if flight number code is valid
+        // Checks if input is valid
         Boolean valid = false;
-        if (flightNumber.Length > 6)
+        if (flightNumber.Length < 7)
         {
+            // Checks if flight number has a valid airline code
             foreach (KeyValuePair<string, Airline> fortnite in terminal.Airlines)
             {
-                Airline tempAirline = fortnite.Value;
-                if (flightNumber == tempAirline.Code)
+                if (flightNumber.Contains(fortnite.Key))
                 {
-                    valid = true;
+                    // Checks if flight number already exists
+                    if (!terminal.Flights.ContainsKey(flightNumber))
+                    {
+                        valid = true;
+                    }
+
                     break;
                 }
             }
@@ -383,10 +390,10 @@ void AddNewFlight(Terminal terminal)
             string destination = Console.ReadLine();
             
             // Need to setup input validation for DateTime
-            Console.Write("Please enter the expected departure/arrival time");
+            Console.Write("Please enter the expected departure/arrival time (hour:minute am/pm): ");
             DateTime expectedTime = Convert.ToDateTime(Console.ReadLine());
 
-            Console.Write("Is there additional information you would like to add? (Y/N) ");
+            Console.Write("Is there additional information you would like to add? (Y/N): ");
             string option = Console.ReadLine();
             option = option.ToUpper();
 
@@ -412,7 +419,7 @@ void AddNewFlight(Terminal terminal)
         }
         else if (!valid)
         {
-            Console.WriteLine("Invalid flight number");
+            Console.WriteLine("Invalid flight number or flight already exists.");
             continue;
         }
 

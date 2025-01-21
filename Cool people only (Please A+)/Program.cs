@@ -172,7 +172,7 @@ void DisplayFlight(Terminal terminal)
 // Task 5
 //----------------------- John's Code ----------------------------
 
-void AssignBoardingGateToFlight(Dictionary<string, Flight> flights, Dictionary<string, BoardingGate> boardingGate)
+void AssignBoardingGateToFlight(Terminal terminal)
 {
     while (true)
     {
@@ -183,8 +183,8 @@ void AssignBoardingGateToFlight(Dictionary<string, Flight> flights, Dictionary<s
 
         // Checks if flight number inputted is in the dictionary
         bool foundFlight = false;
-        Flight tempFlight = new Flight();
-        foreach (KeyValuePair<string, Flight> flight in flights)
+        Flight tempFlight = new NORMFlight();
+        foreach (KeyValuePair<string, Flight> flight in terminal.Flights)
         {
             tempFlight = flight.Value;
             if (flightNum == tempFlight.FlightNumber)
@@ -198,15 +198,6 @@ void AssignBoardingGateToFlight(Dictionary<string, Flight> flights, Dictionary<s
         {
             while (true)
             {
-                if (tempFlight.SAC != "")
-                {
-                    Console.WriteLine("Special Request Code: {0}", tempFlight.SAC);
-                }
-                else
-                {
-                    Console.WriteLine("Special Request Code: None");
-                }
-
                 Console.WriteLine("Enter Boarding Gate Name:");
                 string? gateName = Console.ReadLine();
                 gateName = gateName.ToUpper();
@@ -214,7 +205,7 @@ void AssignBoardingGateToFlight(Dictionary<string, Flight> flights, Dictionary<s
                 // Checks if gate name inputted is in the dictionary
                 bool foundGate = false;
                 BoardingGate tempGate = new BoardingGate();
-                foreach (KeyValuePair<string, BoardingGate> grrrr in boardingGate)
+                foreach (KeyValuePair<string, BoardingGate> grrrr in terminal.BoardingGates)
                 {
                     tempGate = grrrr.Value;
                     if (gateName == tempGate.GateName)
@@ -236,6 +227,14 @@ void AssignBoardingGateToFlight(Dictionary<string, Flight> flights, Dictionary<s
                             Console.WriteLine("Flight Number: {0}", tempFlight.Origin);
                             Console.WriteLine("Flight Number: {0}", tempFlight.Destination);
                             Console.WriteLine("Flight Number: {0}", tempFlight.ExpectedTime);
+                            if (tempFlight.SAC != null)
+                            {
+                                Console.WriteLine("Special Request Code: {0}", tempFlight.SAC);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Special Request Code: None");
+                            }
                             // Gate details
                             Console.WriteLine("Boarding Gate Name: {0}", tempGate.GateName);
                             Console.WriteLine("Supports DDJB: {0}", tempGate.SupportsDDJB);
@@ -251,7 +250,7 @@ void AssignBoardingGateToFlight(Dictionary<string, Flight> flights, Dictionary<s
                                 Console.WriteLine("2. Boarding");
                                 Console.WriteLine("3. On Time");
                                 Console.WriteLine("Please select the new status of the flight");
-                                string status = Console.ReadLine();
+                                string? status = Console.ReadLine();
 
                                 if (status == "1")
                                 {
@@ -364,7 +363,10 @@ while (true)
     {
         AssignBoardingGateToFlight(terminal);
     }
-    else if (option == 0) break;
+    else if (option == 0)
+    {
+        break;
+    }
     else
     {
         Console.WriteLine("Please enter a valid option");

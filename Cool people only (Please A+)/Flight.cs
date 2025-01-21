@@ -1,18 +1,18 @@
-﻿//==========================================================
-// Student Number	: S10259166
-// Student Name	: John Gotinga
-// Partner Name	: Yap Jun Wei
-//==========================================================
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//==========================================================
+// Student Number	: S10259166
+// Student Name	: John Gotinga
+// Partner Name	: Yap Jun Wei
+//==========================================================
+
 namespace Cool_people_only__Please_A__
 {
-    abstract class Flight
+    class Flight
     {
         // Create parameters
         public string FlightNumber { get; set; }
@@ -34,16 +34,16 @@ namespace Cool_people_only__Please_A__
             ExpectedTime = expectedTime;
         }
 
-        public Flight(string flightNumber, string origin, string destination, DateTime expectedTime, string status)
+        public Flight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac)
         {
             FlightNumber = flightNumber;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
-            Status = status;
+            SAC = sac;
         }
 
-        public Flight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, string sac)
+        public Flight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac, string status)
         {
             FlightNumber = flightNumber;
             Origin = origin;
@@ -54,7 +54,10 @@ namespace Cool_people_only__Please_A__
         }
 
         // Methods
-        public abstract double CalculateFees();
+        public double CalculateFees()
+        {
+            throw new NotImplementedException();
+        }
 
         public override string ToString()
         {
@@ -88,7 +91,7 @@ namespace Cool_people_only__Please_A__
         }
 
         // Methods
-        public override double CalculateFees()
+        public double CalculateFees()
         {
             throw new NotImplementedException();
         }
@@ -116,38 +119,38 @@ namespace Cool_people_only__Please_A__
             ExpectedTime = expectedTime;
         }
 
-        public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status) : base(flightNumber, origin, destination, expectedTime, status)
+        public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac) : base(flightNumber, origin, destination, expectedTime, sac)
         {
             FlightNumber = flightNumber;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
-            Status = status;
-        }
-
-        public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, string sac) : base(flightNumber, origin, destination, expectedTime, status, sac)
-        {
-            FlightNumber = flightNumber;
-            Origin = origin;
-            Destination = destination;
-            ExpectedTime = expectedTime;
-            Status = status;
             SAC = sac;
         }
 
-        public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, string sac, double requestFee) : base(flightNumber, origin, destination, expectedTime, sac, status)
+        public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac, string status) : base(flightNumber, origin, destination, expectedTime, sac, status)
         {
             FlightNumber = flightNumber;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
-            Status = status;
             SAC = sac;
+            Status = status;
+        }
+
+        public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac, string status, double requestFee) : base(flightNumber, origin, destination, expectedTime, sac, status)
+        {
+            FlightNumber = flightNumber;
+            Origin = origin;
+            Destination = destination;
+            ExpectedTime = expectedTime;
+            SAC = sac;
+            Status = status;
             RequestFee = requestFee;
         }
 
         // Methods
-        public override double CalculateFees()
+        public double CalculateFees()
         {
             throw new NotImplementedException();
         }
@@ -175,38 +178,38 @@ namespace Cool_people_only__Please_A__
             ExpectedTime = expectedTime;
         }
 
-        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status) : base(flightNumber, origin, destination, expectedTime, status)
+        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac) : base(flightNumber, origin, destination, expectedTime, sac)
         {
             FlightNumber = flightNumber;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
-            Status = status;
-        }
-
-        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, string sac) : base(flightNumber, origin, destination, expectedTime, status, sac)
-        {
-            FlightNumber = flightNumber;
-            Origin = origin;
-            Destination = destination;
-            ExpectedTime = expectedTime;
-            Status = status;
             SAC = sac;
         }
 
-        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, string sac, double requestFee) : base(flightNumber, origin, destination, expectedTime, sac, status)
+        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac, string status) : base(flightNumber, origin, destination, expectedTime, sac, status)
         {
             FlightNumber = flightNumber;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
-            Status = status;
             SAC = sac;
+            Status = status;
+        }
+
+        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac, string status, double requestFee) : base(flightNumber, origin, destination, expectedTime, sac, status)
+        {
+            FlightNumber = flightNumber;
+            Origin = origin;
+            Destination = destination;
+            ExpectedTime = expectedTime;
+            SAC = sac;
+            Status = status;
             RequestFee = requestFee;
         }
 
         // Methods
-        public override double CalculateFees()
+        public double CalculateFees()
         {
             throw new NotImplementedException();
         }
@@ -234,38 +237,38 @@ namespace Cool_people_only__Please_A__
             ExpectedTime = expectedTime;
         }
 
-        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status) : base(flightNumber, origin, destination, expectedTime, status)
+        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac) : base(flightNumber, origin, destination, expectedTime, sac)
         {
             FlightNumber = flightNumber;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
-            Status = status;
-        }
-
-        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, string sac) : base(flightNumber, origin, destination, expectedTime, status, sac)
-        {
-            FlightNumber = flightNumber;
-            Origin = origin;
-            Destination = destination;
-            ExpectedTime = expectedTime;
-            Status = status;
             SAC = sac;
         }
 
-        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, string sac, double requestFee) : base(flightNumber, origin, destination, expectedTime, sac, status)
+        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac, string status) : base(flightNumber, origin, destination, expectedTime, sac, status)
         {
             FlightNumber = flightNumber;
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
-            Status = status;
             SAC = sac;
+            Status = status;
+        }
+
+        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string sac, string status, double requestFee) : base(flightNumber, origin, destination, expectedTime, sac, status)
+        {
+            FlightNumber = flightNumber;
+            Origin = origin;
+            Destination = destination;
+            ExpectedTime = expectedTime;
+            SAC = sac;
+            Status = status;
             RequestFee = requestFee;
         }
 
         // Methods
-        public override double CalculateFees()
+        public double CalculateFees()
         {
             throw new NotImplementedException();
         }

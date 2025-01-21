@@ -169,6 +169,158 @@ void DisplayFlight(Terminal terminal)
 }
 
 //-------------------- End of John's Code ------------------------
+// Task 5
+//----------------------- John's Code ----------------------------
+
+void AssignBoardingGateToFlight(Terminal terminal)
+{
+    while (true)
+    {
+        // Inputs
+        Console.WriteLine("Please enter your Flight Number:");
+        string? flightNum = Console.ReadLine();
+        flightNum = flightNum.ToUpper();
+
+        // Checks if flight number inputted is in the dictionary
+        bool foundFlight = false;
+        Flight tempFlight = new NORMFlight();
+        foreach (KeyValuePair<string, Flight> flight in terminal.Flights)
+        {
+            tempFlight = flight.Value;
+            if (flightNum == tempFlight.FlightNumber)
+            {
+                foundFlight = true;
+                break;
+            }
+        }
+
+        if (foundFlight)
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter Boarding Gate Name:");
+                string? gateName = Console.ReadLine();
+                gateName = gateName.ToUpper();
+
+                // Checks if gate name inputted is in the dictionary
+                bool foundGate = false;
+                BoardingGate tempGate = new BoardingGate();
+                foreach (KeyValuePair<string, BoardingGate> grrrr in terminal.BoardingGates)
+                {
+                    tempGate = grrrr.Value;
+                    if (gateName == tempGate.GateName)
+                    {
+                        foundGate = true;
+                        break;
+                    }
+                }
+
+                // If gate is found. Checks if it has a flight assigned to it
+                if (foundGate)
+                {
+                    if (tempGate.Flight == null)
+                    {
+                        while (true)
+                        {
+                            // Flight details
+                            Console.WriteLine("Flight Number: {0}", tempFlight.FlightNumber);
+                            Console.WriteLine("Flight Number: {0}", tempFlight.Origin);
+                            Console.WriteLine("Flight Number: {0}", tempFlight.Destination);
+                            Console.WriteLine("Flight Number: {0}", tempFlight.ExpectedTime);
+                            if (tempFlight.SAC != null)
+                            {
+                                Console.WriteLine("Special Request Code: {0}", tempFlight.SAC);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Special Request Code: None");
+                            }
+                            // Gate details
+                            Console.WriteLine("Boarding Gate Name: {0}", tempGate.GateName);
+                            Console.WriteLine("Supports DDJB: {0}", tempGate.SupportsDDJB);
+                            Console.WriteLine("Supports CFFT: {0}", tempGate.SupportsCFFT);
+                            Console.WriteLine("Supports LWTT: {0}", tempGate.SupportsLWTT);
+                            Console.WriteLine("Would you like to update the status of the flight? (Y/N)");
+                            string? confirmation = Console.ReadLine();
+                            confirmation = confirmation.ToUpper();
+
+                            if (confirmation == "Y")
+                            {
+                                Console.WriteLine("1. Delayed");
+                                Console.WriteLine("2. Boarding");
+                                Console.WriteLine("3. On Time");
+                                Console.WriteLine("Please select the new status of the flight");
+                                string? status = Console.ReadLine();
+
+                                if (status == "1")
+                                {
+                                    tempFlight.Status = "Delayed";
+                                    tempGate.Flight = tempFlight;
+                                    Console.WriteLine("Flight {0} has been assigned to Boarding Gate {1}!",
+                                        tempFlight.FlightNumber, tempGate.GateName);
+                                    break;
+                                }
+                                else if (status == "2")
+                                {
+                                    tempFlight.Status = "Boarding";
+                                    tempGate.Flight = tempFlight;
+                                    Console.WriteLine("Flight {0} has been assigned to Boarding Gate {1}!",
+                                        tempFlight.FlightNumber, tempGate.GateName);
+                                    break;
+                                }
+                                else if (status == "3")
+                                {
+                                    tempFlight.Status = "On Time";
+                                    tempGate.Flight = tempFlight;
+                                    Console.WriteLine("Flight {0} has been assigned to Boarding Gate {1}!",
+                                        tempFlight.FlightNumber, tempGate.GateName);
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please enter a valid option.");
+                                }
+                            }
+                            else if (confirmation == "N")
+                            {
+                                tempFlight.Status = "On Time";
+                                tempGate.Flight = tempFlight;
+                                Console.WriteLine(tempFlight.Status);
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter a valid option.");
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("This boarding gate already has a flight assigned to it.");
+                        continue;
+                    }
+                }
+                else if (!foundGate)
+                {
+                    Console.WriteLine("Gate not found.");
+                    continue;
+                }
+
+                break;
+            }
+        }
+        else if (!foundFlight)
+        {
+            Console.WriteLine("Flight not found.");
+            continue;
+        }
+
+        break;
+    }
+}
+
+//-------------------- End of John's Code ------------------------
 // Program
 
 //Make the dictionaries to store data
@@ -207,7 +359,14 @@ while (true)
     {
         DisplayFlight(terminal);
     }
-    else if (option == 0) break;
+    else if (option == 3)
+    {
+        AssignBoardingGateToFlight(terminal);
+    }
+    else if (option == 0)
+    {
+        break;
+    }
     else
     {
         Console.WriteLine("Please enter a valid option");

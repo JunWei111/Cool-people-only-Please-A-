@@ -18,12 +18,32 @@ namespace Cool_people_only__Please_A__
         // Default Constructor
         public BoardingGate() { }
 
+        // Constructors
+        public BoardingGate(string gateName, bool supportsCFFT, bool supportsDDJB, bool supportsLWTT, Flight flight)
+        {
+            GateName = gateName;
+            SupportsCFFT = supportsCFFT;
+            SupportsDDJB = supportsDDJB;
+            SupportsLWTT = supportsLWTT;
+            Flight = flight;
+        }
         public BoardingGate(string gateName, bool supportsCFFT, bool supportsDDJB, bool supportsLWTT)
         {
             GateName = gateName;
             SupportsCFFT = supportsCFFT;
             SupportsDDJB = supportsDDJB;
             SupportsLWTT = supportsLWTT;
+        }
+        // Methods
+        public double CalculateFees()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return "Gate Name: " + GateName + "Supports CFFT: " + SupportsCFFT +
+                "Supports DDJB: " + SupportsDDJB + "Supports LWTT: " + SupportsLWTT;
         }
     }
 }

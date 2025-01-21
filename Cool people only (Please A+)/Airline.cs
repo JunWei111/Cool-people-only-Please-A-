@@ -15,10 +15,39 @@ namespace Cool_people_only__Please_A__
 
         // Default Constructor
         public Airline() { }
+
+        // Constructors
+        public Airline(string name, string code, Dictionary<string, Flight> flights)
+        {
+            Name = name;
+            Code = code;
+            Flights = flights;
+        }
         public Airline(string name, string code)
         {
             Name = name;
             Code = code;
+        }
+
+        // Methods
+        public bool AddFlight(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double CalculateFees()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveFlight(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return "Name: " + Name + "Code: " + Code + "Flgihts: " + Flights; // No idea how to display the Flights dictionary properly -John
         }
     }
 }

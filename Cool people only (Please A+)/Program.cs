@@ -5,9 +5,9 @@
 //==========================================================
 
 // John: 2, 3, 5, 6, & 9
+// Jun Wei: 1, 4, 7 & 8
 
 using Cool_people_only__Please_A__;
-using GodsPlan;
 using System.Collections.Generic;
 
 void DisplayMenu()
@@ -27,62 +27,9 @@ void DisplayMenu()
     Console.WriteLine("\nPlease select your option:");
 }
 
-// Task 2
-//----------------------- John's Code ----------------------------
-void InitData(Dictionary<string, Flight> flights)
-{
-    using (StreamReader work = new StreamReader("flights.csv"))
-    {
-        // Skip header
-        string? please = work.ReadLine();
-
-        while ((please = work.ReadLine()) != null)
-        {
-            // Splits commas and checks the special request code to make a object
-            string[] daddy = please.Split(",");
-            if (daddy[4] == "NORM")
-            {
-                NORMFlight tempFlight = new NORMFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
-                flights[tempFlight.FlightNumber] = tempFlight;
-            }
-            else if (daddy[4] == "LWTT")
-            {
-                LWTTFlight tempFlight = new LWTTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
-                flights[tempFlight.FlightNumber] = tempFlight;
-            }
-            else if (daddy[4] == "DDJB")
-            {
-                DDJBFlight tempFlight = new DDJBFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
-                flights[tempFlight.FlightNumber] = tempFlight;
-            }
-            else if (daddy[4] == "CFFT")
-            {
-                CFFTFlight tempFlight = new CFFTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
-                flights[tempFlight.FlightNumber] = tempFlight;
-            }
-        }
-    }
-}
-
-//-----------------------------------------------------------------
-// Program
-
-//Make the dictionaries to store data
-Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
-InitData(flights);
-//----------------------- End of John's Code ---------------------------
-
-//==========================================================
-// Student Number	: S10259166
-// Student Name	: John Gotinga
-// Partner Name	: Yap Jun Wei
-//==========================================================
-
-// Jun Wei: 1, 4, 7 & 8
-
-//----------------------- Jun Wei's Code ----------------------------
 //Task 1
-static void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, BoardingGate> boardingGate)
+//--------------------- Jun Wei's Code ---------------------------
+void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, BoardingGate> boardingGate)
 {
     using (StreamReader work = new StreamReader("airlines.csv"))
     {
@@ -141,12 +88,96 @@ static void LoadFiles(Dictionary<string, Airline> airline, Dictionary<string, Bo
         }
     }
 }
-static void Main(string[] args)
+
+// Make the dictionaries to store data
+
+
+//------------------ End of Jun Wei's Code -----------------------
+// Task 2
+//----------------------- John's Code ----------------------------
+void InitData(Dictionary<string, Flight> flights)
 {
-    //Make the dictionaries to store data
-    Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
-    Dictionary<string, Airline> airline = new Dictionary<string, Airline>();
-    Dictionary<string, BoardingGate> boardingGate = new Dictionary<string, BoardingGate>();
-    LoadFiles(airline, boardingGate);
+    using (StreamReader work = new StreamReader("flights.csv"))
+    {
+        // Skip header
+        string? please = work.ReadLine();
+
+        while ((please = work.ReadLine()) != null)
+        {
+            // Splits commas and checks the special request code to make a object
+            string[] daddy = please.Split(",");
+            if (daddy[4] == "NORM")
+            {
+                NORMFlight tempFlight = new NORMFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
+                flights[tempFlight.FlightNumber] = tempFlight;
+            }
+            else if (daddy[4] == "LWTT")
+            {
+                LWTTFlight tempFlight = new LWTTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
+                flights[tempFlight.FlightNumber] = tempFlight;
+            }
+            else if (daddy[4] == "DDJB")
+            {
+                DDJBFlight tempFlight = new DDJBFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
+                flights[tempFlight.FlightNumber] = tempFlight;
+            }
+            else if (daddy[4] == "CFFT")
+            {
+                CFFTFlight tempFlight = new CFFTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
+                flights[tempFlight.FlightNumber] = tempFlight;
+            }
+        }
+    }
 }
-//----------------------- End of Jun Wei's Code ---------------------------
+
+//-------------------- End of John's Code ------------------------
+// Task 3
+//----------------------- John's Code ----------------------------
+void DisplayFlight(Dictionary<string, Flight> flights, Dictionary<string, Airline> airline)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Flights for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine("{0, -15} {1, -20} {2, -18} {3} {4}",
+        "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival");
+
+    foreach (KeyValuePair<string, Flight> crashOut in flights)
+    {
+        Flight tempFlight = crashOut.Value;
+
+        // Checks airline name based on flight number
+        string airlineName = "";
+        foreach (KeyValuePair<string, Airline> dietzNutz in airline)
+        {
+            Airline tempAirline = dietzNutz.Value;
+            if (tempFlight.FlightNumber.Contains(tempAirline.Code))
+            {
+                airlineName = tempAirline.Name;
+                break;
+            }
+        }
+
+        Console.WriteLine("{0, -15} {1, -20} {2, -18} {3} {4}",
+            tempFlight.FlightNumber, airlineName, tempFlight.Origin, tempFlight.Destination, tempFlight.ExpectedTime);
+    }
+}
+
+//-------------------- End of John's Code ------------------------
+// Program
+//--------------------- Jun Wei's Code ---------------------------
+
+Dictionary<string, Airline> airline = new Dictionary<string, Airline>();
+Dictionary<string, BoardingGate> boardingGate = new Dictionary<string, BoardingGate>();
+LoadFiles(airline, boardingGate);
+
+//------------------ End of Jun Wei's Code -----------------------
+//----------------------- John's Code ----------------------------
+
+//Make the dictionaries to store data
+Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
+InitData(flights);
+
+// Display Flights
+DisplayFlight(flights, airline);
+
+//-------------------- End of John's Code ------------------------

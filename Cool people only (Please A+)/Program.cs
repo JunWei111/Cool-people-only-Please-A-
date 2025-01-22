@@ -333,21 +333,29 @@ void DisplayAirlineFlights(Terminal terminal)
     Console.Write("Enter Airline Code: ");
     string code = Console.ReadLine();
 
-    if (terminal.Airlines.ContainsKey(code))
+    // OLD CODE
+    // if (terminal.Airlines.ContainsKey(code))
+    // {
+    //     Airline airline = terminal.Airlines[code];
+    //     Console.WriteLine("=============================================");
+    //     Console.WriteLine("List of Flights for {0}", airline.Name);
+    //     Console.WriteLine("=============================================");
+    //     Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time");
+    //     foreach (var details in airline.Flights.Values)
+    //     {
+    //         Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", details.FlightNumber, airline.Name, details.Origin, details.Destination, details.ExpectedTime);
+    //     }
+    // }
+    // else
+    // {
+    //     Console.WriteLine("Airline not found.");
+    
+    foreach (Airline airline in terminal.Airlines.Values)
     {
-        Airline airline = terminal.Airlines[code];
-        Console.WriteLine("=============================================");
-        Console.WriteLine("List of Flights for {0}", airline.Name);
-        Console.WriteLine("=============================================");
-        Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time");
-        foreach (var details in airline.Flights.Values)
+        if (code.Contains(airline.Code))
         {
-            Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", details.FlightNumber, airline.Name, details.Origin, details.Destination, details.ExpectedTime);
+            Console.WriteLine("Skibidi");
         }
-    }
-    else
-    {
-        Console.WriteLine("Airline not found.");
     }
 }
     //------------------ End of Jun Wei's Code -----------------------

@@ -25,7 +25,6 @@ void DisplayMenu()
     Console.WriteLine("6. Modify Flight Details");
     Console.WriteLine("7. Display Flight Schedule");
     Console.WriteLine("0. Exit");
-    Console.WriteLine("");
 }
 
 //Task 1
@@ -173,15 +172,21 @@ void DisplayFlight(Terminal terminal)
 //-------------------- End of John's Code ------------------------
 // Task 4
 //--------------------- Jun Wei's Code ---------------------------
-void ListBoardingGates(Dictionary<string, BoardingGate> boardingGates)
+void ListBoardingGates(Terminal terminal)
 {
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
-    foreach (var gate in boardingGates.Values)
+    Console.WriteLine("{0,-15} {1,-22} {2,-22} {3,-22} {4}", "Gate Name", "DDJB", "CFFT", "LWTT", "Flights");
+    foreach (var gate in terminal.BoardingGates.Values)
     {
+        if (gate.Flight != null)
+        {
+            // Print the gate details, special request codes and flight numbers assigned
+            Console.WriteLine($"{gate.GateName,-15} {gate.SupportsDDJB,-22} {gate.SupportsCFFT,-22} {gate.SupportsLWTT,-22} {gate.Flight.FlightNumber}");
+        }
         // Print the gate details and special request codes
-        Console.WriteLine($"{gate.GateName,-15} {gate.SupportsDDJB,-22} {gate.SupportsCFFT,-22} {gate.SupportsLWTT,-22}");
+        Console.WriteLine($"{gate.GateName,-15} {gate.SupportsDDJB,-22} {gate.SupportsCFFT,-22} {gate.SupportsLWTT,-22} Unassigned");
     }
 }
 //------------------ End of Jun Wei's Code -----------------------
@@ -374,6 +379,10 @@ while (true)
     if (option == 1)
     {
         DisplayFlight(terminal);
+    }
+    else if (option == 2)
+    {
+        ListBoardingGates(terminal);
     }
     else if (option == 3)
     {

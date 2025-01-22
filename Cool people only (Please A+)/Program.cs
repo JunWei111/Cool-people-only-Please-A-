@@ -1,7 +1,9 @@
 ﻿//==========================================================
 // Student Number	: S10259166
 // Student Name	: John Gotinga
-// Partner Name	: Yap Jun Wei
+
+// Student Number	: S10259029
+// Student Name	: Yap Jun Wei
 //==========================================================
 
 // John: 2, 3, 5, 6, & 9
@@ -9,25 +11,84 @@
 
 using Cool_people_only__Please_A__;
 using System.Collections.Generic;
-
+using System.ComponentModel;
 void DisplayMenu()
 {
-    Console.WriteLine("=============================================");
-    Console.WriteLine("Welcome to Changi Airport Terminal 5");
-    Console.WriteLine("=============================================");
-    Console.WriteLine("1. List All Flights");
-    Console.WriteLine("2. List Boarding Gates");
-    Console.WriteLine("3. Assign a Boarding Gate to a Flight");
-    Console.WriteLine("4. Create Flight");
-    Console.WriteLine("5. Display Airline Flights");
-    Console.WriteLine("6. Modify Flight Details");
-    Console.WriteLine("7. Display Flight Schedule");
-    Console.WriteLine("0. Exit");
+    bool exit = false;
+    while (!exit)
+    {
+        try
+        {
+            Console.WriteLine("=============================================");
+            Console.WriteLine("Welcome to Changi Airport Terminal 5");
+            Console.WriteLine("=============================================");
+            Console.WriteLine("1. List All Flights");
+            Console.WriteLine("2. List Boarding Gates");
+            Console.WriteLine("3. Assign a Boarding Gate to a Flight");
+            Console.WriteLine("4. Create Flight");
+            Console.WriteLine("5. Display Airline Flights");
+            Console.WriteLine("6. Modify Flight Details");
+            Console.WriteLine("7. Display Flight Schedule");
+            Console.WriteLine("0. Exit");
+            Console.WriteLine("");
+            Console.WriteLine("Please select your option:");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            if (choice >= 0 && choice <= 7)
+            {
+                switch (choice)
+                {
+                    case 1:
+                        //DisplayFlight(terminal);
+                        continue;
+
+                    case 2:
+                        //ListBoardingGates(boardingGates);
+                        continue;
+
+                    case 3:
+
+                        continue;
+
+                    case 4:
+
+                        continue;
+
+                    case 5:
+
+                        continue;
+
+                    case 6:
+
+                        continue;
+
+                    case 7:
+
+                        continue;
+
+                    case 0:
+                        Console.WriteLine("Goodbye!");
+                        exit = true; // Set to true to break out of the loop
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid option. Please choose a valid option between 0 and 7.");
+            }
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid input. Please enter a number between 0 and 7.");
+        }
+    }
+
 }
 
 //Task 1
 //--------------------- Jun Wei's Code ---------------------------
-
 void LoadFiles(Dictionary<string, Airline> airlines, Dictionary<string, BoardingGate> boardingGates)
 {
     using (StreamReader work = new StreamReader("airlines.csv"))
@@ -169,6 +230,20 @@ void DisplayFlight(Terminal terminal)
 }
 
 //-------------------- End of John's Code ------------------------
+// Task 4
+//--------------------- Jun Wei's Code ---------------------------
+void ListBoardingGates(Dictionary<string, BoardingGate> boardingGates)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    foreach (var gate in boardingGates.Values)
+    {
+        // Print the gate details and special request codes
+        Console.WriteLine($"{gate.GateName,-15} {gate.SupportsDDJB,-22} {gate.SupportsCFFT,-22} {gate.SupportsLWTT,-22}");
+    }
+}
+//------------------ End of Jun Wei's Code -----------------------
 // Task 5
 //----------------------- John's Code ----------------------------
 

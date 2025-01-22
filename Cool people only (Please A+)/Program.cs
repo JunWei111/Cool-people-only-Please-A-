@@ -323,52 +323,62 @@ void AssignBoardingGateToFlight(Terminal terminal)
 //--------------------- Jun Wei's Code ---------------------------
 void DisplayAirlineFlights(Terminal terminal)
 {
-    Console.WriteLine("=============================================");
-    Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
-    Console.WriteLine("=============================================");
-    foreach (var airline in terminal.Airlines.Values)
+    try
     {
-        Console.WriteLine("{0,-15} {1,-25}", airline.Code, airline.Name);
-    }
-    Console.Write("Enter Airline Code: ");
-    string code = Console.ReadLine();
-
-    // OLD CODE
-    // if (terminal.Airlines.ContainsKey(code))
-    // {
-    //     Airline airline = terminal.Airlines[code];
-    //     Console.WriteLine("=============================================");
-    //     Console.WriteLine("List of Flights for {0}", airline.Name);
-    //     Console.WriteLine("=============================================");
-    //     Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time");
-    //     foreach (var details in airline.Flights.Values)
-    //     {
-    //         Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", details.FlightNumber, airline.Name, details.Origin, details.Destination, details.ExpectedTime);
-    //     }
-    // }
-    // else
-    // {
-    //     Console.WriteLine("Airline not found.");
-    
-    foreach (Airline airline in terminal.Airlines.Values)
-    {
-        if (code.Contains(airline.Code))
+        Console.WriteLine("=============================================");
+        Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
+        Console.WriteLine("=============================================");
+        foreach (var airline in terminal.Airlines.Values)
         {
-            Console.WriteLine("Skibidi");
+            Console.WriteLine("{0,-15} {1,-25}", airline.Code, airline.Name);
+        }
+        Console.Write("Enter Airline Code: ");
+        string code = Console.ReadLine();
+
+        if (terminal.Airlines.ContainsKey(code))
+        {
+            Airline airline = terminal.Airlines[code];
+            Console.WriteLine("=============================================");
+            Console.WriteLine("List of Flights for {0}", airline.Name);
+            Console.WriteLine("=============================================");
+            Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time");
+            foreach (var flight in terminal.Flights.Values)
+            {
+                if (flight.FlightNumber.Contains(airline.Code))
+                {
+                    Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", flight.FlightNumber, airline.Name, flight.Origin, flight.Destination, flight.ExpectedTime);
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("Airline not found.");
         }
     }
+    catch(KeyNotFoundException ex)
+    {
+        Console.WriteLine($"Error: Airline code not found. {ex.Message}");
+    }
+    catch (FormatException ex)
+    {
+        Console.WriteLine($"Error: Invalid format encountered. {ex.Message}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
+    }
 }
-    //------------------ End of Jun Wei's Code -----------------------
-    //-------------------- End of John's Code ------------------------
-    // Program
 
-    //Make the dictionaries to store data
-    Dictionary<string, Airline> airlines = new Dictionary<string, Airline>();
+//------------------ End of Jun Wei's Code -----------------------
+//-------------------- End of John's Code ------------------------
+// Program
+
+//Make the dictionaries to store data
+Dictionary<string, Airline> airlines = new Dictionary<string, Airline>();
 Dictionary<string, BoardingGate> boardingGates = new Dictionary<string, BoardingGate>();
-LoadFiles(airlines, boardingGates);
 Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
 InitData(flights);
-
+LoadFiles(airlines, boardingGates);
 // Store all Dictionaries into a Terminal class
 Terminal terminal = new Terminal("Terminal 5", airlines, flights, boardingGates);
 

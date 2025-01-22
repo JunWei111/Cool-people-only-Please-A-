@@ -15,6 +15,7 @@ namespace Cool_people_only__Please_A__
         public Dictionary<string, BoardingGate> BoardingGates { get; set; }
         public Dictionary<string, double> GateFees { get; set; }
 
+
         // Default Constructor
         public Terminal() { }
 

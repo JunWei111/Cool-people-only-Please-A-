@@ -494,7 +494,8 @@ void AddNewFlight(Terminal terminal)
             Console.WriteLine("Invalid flight number or flight already exists.");
             continue;
         }
-
+    }
+}
 //-------------------- End of John's Code ------------------------
 // Task 7
 //--------------------- Jun Wei's Code ---------------------------
@@ -545,6 +546,10 @@ void DisplayAirlineFlights(Terminal terminal)
         Console.WriteLine($"Error: {ex.Message}");
     }
 }
+//------------------ End of Jun Wei's Code -----------------------
+// Task 8
+//--------------------- Jun Wei's Code ---------------------------
+
 
 //------------------ End of Jun Wei's Code -----------------------
 // Program
@@ -592,6 +597,11 @@ while (true)
     {
         AssignBoardingGateToFlight(terminal);
     }
+    else if (option == 5)
+    {
+        DisplayAirlineFlights(terminal);
+    }
+
     else if (option == 0)
     {
         Console.WriteLine("Goodbye!");

@@ -49,7 +49,17 @@ namespace Cool_people_only__Please_A__
 
         public Airline GetAirlineFromFlight(Flight flight)
         {
-            throw new NotImplementedException();
+            Airline airline = new Airline();
+            foreach (Airline tempAirline in Airlines.Values)
+            {
+                if (flight.FlightNumber.Contains(tempAirline.Code))
+                {
+                    airline = tempAirline;
+                    break;
+                }
+            }
+
+            return airline;
         }
 
         public void PrintAirlineFees()

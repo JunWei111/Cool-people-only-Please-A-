@@ -415,6 +415,10 @@ while (true)
     {
         AssignBoardingGateToFlight(terminal);
     }
+    else if (option == 5)
+    {
+        DisplayAirlineFlights(terminal);
+    }
     else if (option == 0)
     {
         break;

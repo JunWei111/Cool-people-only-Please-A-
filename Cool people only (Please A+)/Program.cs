@@ -1,7 +1,9 @@
 ﻿//==========================================================
 // Student Number	: S10259166
 // Student Name	: John Gotinga
-// Partner Name	: Yap Jun Wei
+
+// Student Number	: S10259029
+// Student Name	: Yap Jun Wei
 //==========================================================
 
 // John: 2, 3, 5, 6, & 9
@@ -9,7 +11,7 @@
 
 using Cool_people_only__Please_A__;
 using System.Collections.Generic;
-
+using System.ComponentModel;
 void DisplayMenu()
 {
     Console.WriteLine("=============================================");
@@ -27,7 +29,6 @@ void DisplayMenu()
 
 //Task 1
 //--------------------- Jun Wei's Code ---------------------------
-
 void LoadFiles(Dictionary<string, Airline> airlines, Dictionary<string, BoardingGate> boardingGates)
 {
     using (StreamReader work = new StreamReader("airlines.csv"))
@@ -172,6 +173,26 @@ void DisplayFlight(Terminal terminal)
 }
 
 //-------------------- End of John's Code ------------------------
+// Task 4
+//--------------------- Jun Wei's Code ---------------------------
+void ListBoardingGates(Terminal terminal)
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine("{0,-15} {1,-22} {2,-22} {3,-22} {4}", "Gate Name", "DDJB", "CFFT", "LWTT", "Flights");
+    foreach (var gate in terminal.BoardingGates.Values)
+    {
+        if (gate.Flight != null)
+        {
+            // Print the gate details, special request codes and flight numbers assigned
+            Console.WriteLine($"{gate.GateName,-15} {gate.SupportsDDJB,-22} {gate.SupportsCFFT,-22} {gate.SupportsLWTT,-22} {gate.Flight.FlightNumber}");
+        }
+        // Print the gate details and special request codes
+        Console.WriteLine($"{gate.GateName,-15} {gate.SupportsDDJB,-22} {gate.SupportsCFFT,-22} {gate.SupportsLWTT,-22} Unassigned");
+    }
+}
+//------------------ End of Jun Wei's Code -----------------------
 // Task 5
 //----------------------- John's Code ----------------------------
 
@@ -479,15 +500,65 @@ void AddNewFlight(Terminal terminal)
 }
 
 //-------------------- End of John's Code ------------------------
+// Task 7
+//--------------------- Jun Wei's Code ---------------------------
+void DisplayAirlineFlights(Terminal terminal)
+{
+    try
+    {
+        Console.WriteLine("=============================================");
+        Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
+        Console.WriteLine("=============================================");
+        foreach (var airline in terminal.Airlines.Values)
+        {
+            Console.WriteLine("{0,-15} {1,-25}", airline.Code, airline.Name);
+        }
+        Console.Write("Enter Airline Code: ");
+        string code = Console.ReadLine();
+
+        if (terminal.Airlines.ContainsKey(code))
+        {
+            Airline airline = terminal.Airlines[code];
+            Console.WriteLine("=============================================");
+            Console.WriteLine("List of Flights for {0}", airline.Name);
+            Console.WriteLine("=============================================");
+            Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival Time");
+            foreach (var flight in terminal.Flights.Values)
+            {
+                if (flight.FlightNumber.Contains(airline.Code))
+                {
+                    Console.WriteLine("{0,-15} {1,-20} {2,-20} {3,-17} {4}", flight.FlightNumber, airline.Name, flight.Origin, flight.Destination, flight.ExpectedTime);
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("Airline not found.");
+        }
+    }
+    catch(KeyNotFoundException ex)
+    {
+        Console.WriteLine($"Error: Airline code not found. {ex.Message}");
+    }
+    catch (FormatException ex)
+    {
+        Console.WriteLine($"Error: Invalid format encountered. {ex.Message}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
+    }
+}
+
+//------------------ End of Jun Wei's Code -----------------------
 // Program
 
 //Make the dictionaries to store data
 Dictionary<string, Airline> airlines = new Dictionary<string, Airline>();
 Dictionary<string, BoardingGate> boardingGates = new Dictionary<string, BoardingGate>();
-LoadFiles(airlines, boardingGates);
 Dictionary<string, Flight> flights = new Dictionary<string, Flight>();
 InitData(flights);
-
+LoadFiles(airlines, boardingGates);
 // Store all Dictionaries into a Terminal class
 Terminal terminal = new Terminal("Terminal 5", airlines, flights, boardingGates);
 
@@ -517,6 +588,10 @@ while (true)
     {
         DisplayFlight(terminal);
     }
+    else if (option == 2)
+    {
+        ListBoardingGates(terminal);
+    }
     else if (option == 3)
     {
         AssignBoardingGateToFlight(terminal);
@@ -524,6 +599,10 @@ while (true)
     else if (option == 4)
     {
         AddNewFlight(terminal);
+    }
+    else if (option == 5)
+    {
+        DisplayAirlineFlights(terminal);
     }
     else if (option == 0)
     {

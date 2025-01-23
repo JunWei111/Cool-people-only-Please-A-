@@ -411,7 +411,7 @@ void AddNewFlight(Terminal terminal)
                 Console.Write("Please enter the expected departure/arrival time (e.g. \"10:10 pm\"): ");
                 string? input = Console.ReadLine();
 
-                // Checks if user input matches format
+                // Checks if user input matches format. Basically input validation
                 DateTime expectedTime;
                 if (!DateTime.TryParseExact(input, "h:mm tt", null, System.Globalization.DateTimeStyles.None, out expectedTime))
                 {
@@ -487,6 +487,8 @@ void AddNewFlight(Terminal terminal)
                             flight.ExpectedTime.ToString("h:mm tt") + "," + flight.SAC);
                     }
                 }
+
+                break;
             }
         }
         else if (!valid)

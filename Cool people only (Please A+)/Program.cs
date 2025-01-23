@@ -11,6 +11,7 @@
 
 using Cool_people_only__Please_A__;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 void DisplayMenu()
 {
@@ -366,7 +367,12 @@ void AddNewFlight(Terminal terminal)
 
         // Formats flight number
         flightNumber = flightNumber.Trim();
-        if (!flightNumber.Contains(" "))
+        if (flightNumber.Length < 5)
+        {
+            Console.WriteLine("Invalid flight number or flight already exists.");
+            continue;
+        }
+        else if (!flightNumber.Contains(" "))
         {
             flightNumber = flightNumber.Substring(0, 2) + " " + flightNumber.Substring(2);
         }
@@ -538,7 +544,7 @@ void DisplayAirlineFlights(Terminal terminal)
             Console.WriteLine("Airline not found.");
         }
     }
-    catch(KeyNotFoundException ex)
+    catch (KeyNotFoundException ex)
     {
         Console.WriteLine($"Error: Airline code not found. {ex.Message}");
     }
@@ -553,6 +559,48 @@ void DisplayAirlineFlights(Terminal terminal)
 }
 
 //------------------ End of Jun Wei's Code -----------------------
+// Task 9
+//----------------------- John's Code ----------------------------
+
+void DisplayFlightOrdered(Terminal terminal)
+{
+    SortedList<DateTime, Flight> sortedFlight = new SortedList<DateTime, Flight>();
+
+    foreach (Flight tempFlight in terminal.Flights.Values)
+    {
+        sortedFlight[tempFlight.ExpectedTime] = tempFlight;
+    }
+
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Flights for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine("{0, -15} {1, -20} {2, -20} {3, -17} {4, -28} {5, -14} {6}",
+        "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival", "Status", "Boarding Gate");
+
+    foreach (Flight tempFlight in sortedFlight.Values)
+    {
+        // Checks airline name based on flight number
+        Airline tempAirline = terminal.GetAirlineFromFlight(tempFlight);
+
+        // Checks to see if flight is assigned to a boarding gate
+        string gateName = "Unassigned";
+        foreach (KeyValuePair<string, BoardingGate> boardBoard in terminal.BoardingGates)
+        {
+            BoardingGate tempGate = boardBoard.Value;
+            if (tempGate.Flight == tempFlight)
+            {
+                gateName = tempGate.GateName;
+            }
+        }
+
+        Console.WriteLine("{0, -15} {1, -20} {2, -20} {3, -17} {4, -28} {5, -14} {6}",
+            tempFlight.FlightNumber, tempAirline.Name, tempFlight.Origin, tempFlight.Destination,
+            tempFlight.ExpectedTime, tempFlight.Status, gateName);
+    }
+    Console.WriteLine();
+}
+
+//-------------------- End of John's Code ------------------------
 // Program
 
 //Make the dictionaries to store data
@@ -605,6 +653,10 @@ while (true)
     else if (option == 5)
     {
         DisplayAirlineFlights(terminal);
+    }
+    else if (option == 7)
+    {
+        DisplayFlightOrdered(terminal);
     }
     else if (option == 0)
     {

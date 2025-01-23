@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Cool_people_only__Please_A__
 {
-    abstract class Flight
+    abstract class Flight : IComparable<Flight>
     {
         // Create parameters
         public string FlightNumber { get; set; }
@@ -47,6 +47,11 @@ namespace Cool_people_only__Please_A__
 
         // Methods
         public abstract double CalculateFees();
+
+        public int CompareTo(Flight flight)
+        {
+            return ExpectedTime.CompareTo(flight.ExpectedTime);
+        }
 
         public override string ToString()
         {

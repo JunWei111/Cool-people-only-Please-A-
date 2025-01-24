@@ -449,16 +449,6 @@ void AddNewFlight(Terminal terminal)
 
         // Formats flight number
         flightNumber = flightNumber.Trim().ToUpper();
-        if (flightNumber.Length < 5)
-        {
-            Console.WriteLine("Invalid flight number or flight already exists.");
-            continue;
-        }
-        else if (!flightNumber.Contains(" "))
-        {
-            flightNumber = flightNumber.Substring(0, 2) + " " + flightNumber.Substring(2);
-        }
-        flightNumber = flightNumber.ToUpper();
 
         // Validates input
         bool validInput = ValidateInputFlight(flightNumber);
@@ -581,6 +571,7 @@ void AddNewFlight(Terminal terminal)
         break;
     }
 }
+
 //-------------------- End of John's Code ------------------------
 // Task 7
 //--------------------- Jun Wei's Code ---------------------------
@@ -631,10 +622,6 @@ void DisplayAirlineFlights(Terminal terminal)
         Console.WriteLine($"Error: {ex.Message}");
     }
 }
-//------------------ End of Jun Wei's Code -----------------------
-// Task 8
-//--------------------- Jun Wei's Code ---------------------------
-
 
 //------------------ End of Jun Wei's Code -----------------------
 // Task 9
@@ -723,6 +710,10 @@ while (true)
     else if (option == 3)
     {
         AssignBoardingGateToFlight(terminal);
+    }
+    else if (option == 4)
+    {
+        AddNewFlight(terminal);
     }
     else if (option == 5)
     {

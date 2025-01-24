@@ -492,7 +492,7 @@ void AddNewFlight(Terminal terminal)
             // Format input
             origin = origin.Trim();
 
-            if (origin == null)
+            if (origin == null || origin == "")
             {
                 Console.WriteLine("Input cannot be empty.");
                 continue;
@@ -509,7 +509,7 @@ void AddNewFlight(Terminal terminal)
             // Format input
             destination = destination.Trim();
 
-            if (destination == null)
+            if (destination == null || destination == "")
             {
                 Console.WriteLine("Input cannot be empty.");
                 continue;

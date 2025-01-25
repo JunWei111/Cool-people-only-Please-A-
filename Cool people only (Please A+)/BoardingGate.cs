@@ -34,6 +34,10 @@ namespace Cool_people_only__Please_A__
             SupportsDDJB = supportsDDJB;
             SupportsLWTT = supportsLWTT;
         }
+        public BoardingGate(string gateName)
+        {
+            GateName = gateName;
+        }
         // Methods
         public double CalculateFees()
         {

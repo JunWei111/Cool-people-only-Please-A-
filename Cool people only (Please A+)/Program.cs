@@ -582,13 +582,14 @@ void DisplayAirlineFlights(Terminal terminal)
         Console.WriteLine("=============================================");
         Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
         Console.WriteLine("=============================================");
+        Console.WriteLine("{0,-15} {1,-25}", "Airline Code", "Airline Name");
         foreach (var airline in terminal.Airlines.Values)
         {
             Console.WriteLine("{0,-15} {1,-25}", airline.Code, airline.Name);
         }
         Console.Write("Enter Airline Code: ");
         string code = Console.ReadLine();
-
+        code = code.ToUpper();
         if (terminal.Airlines.ContainsKey(code))
         {
             Airline airline = terminal.Airlines[code];
@@ -624,12 +625,6 @@ void DisplayAirlineFlights(Terminal terminal)
 }
 
 //------------------ End of Jun Wei's Code -----------------------
-// Task 9
-//----------------------- John's Code ----------------------------
-
-void DisplayFlightOrdered(Terminal terminal)
-{
-    SortedList<DateTime, Flight> sortedFlight = new SortedList<DateTime, Flight>();
 
     foreach (Flight tempFlight in terminal.Flights.Values)
     {
@@ -719,14 +714,18 @@ while (true)
     {
         DisplayAirlineFlights(terminal);
     }
-    else if (option == 7)
-    {
-        DisplayFlightOrdered(terminal);
     }
     else if (option == 0)
     {
         Console.WriteLine("Goodbye!");
         break;
+    }
+    else if (option == 10)
+    {
+        foreach (var kvp in terminal.Airlines)
+        {
+            Console.WriteLine($"Flight: {kvp.Key}, Airline: {kvp.Value.Name}");
+        }
     }
     else
     {

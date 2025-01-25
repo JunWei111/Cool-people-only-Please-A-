@@ -49,17 +49,21 @@ namespace Cool_people_only__Please_A__
 
         public Airline GetAirlineFromFlight(Flight flight)
         {
-            Airline airline = new Airline();
-            foreach (Airline tempAirline in Airlines.Values)
-            {
-                if (flight.FlightNumber.Contains(tempAirline.Code))
-                {
-                    airline = tempAirline;
-                    break;
-                }
-            }
 
-            return airline;
+            string[] parts = flight.FlightNumber.Split(' ');
+            if (parts.Length < 1)
+            {
+                Console.WriteLine($"Error: Invalid flight number format: {flight.FlightNumber}");
+                return null;
+            }
+            string airlinePrefix = parts[0];
+
+            // Lookup the airline using the prefix
+            if (Airlines.TryGetValue(airlinePrefix, out Airline airline))
+            {
+                return airline;
+            }
+            return null;
         }
 
         public void PrintAirlineFees()

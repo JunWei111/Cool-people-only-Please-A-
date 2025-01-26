@@ -532,25 +532,34 @@ void AddNewFlight(Terminal terminal)
 
             // Creates flight object
             Flight flight = new NORMFlight();
-            Console.Write("Is there additional information you would like to add? (Y/N): ");
-            string option = Console.ReadLine();
-            option = option.ToUpper();
-
-            bool created = false;
-            if (option == "Y")
+            while (true)
             {
-                Console.Write("Please enter the special request code of the flight (LWTT/DDJB/CFFT) : ");
-                string? sac = Console.ReadLine();
+                Console.Write("Is there additional information you would like to add? (Y/N): ");
+                string option = Console.ReadLine();
+                option = option.ToUpper();
 
-                created = CreateSpecialFlightDetails(terminal, flight, flightNumber, origin, destination, expectedTime, sac);
-            }
-            else if (option == "N")
-            {
-                created = CreateFlightDetails(terminal, flight, flightNumber, origin, destination, expectedTime);
-            }
+                bool flightCreated = false;
+                if (option == "Y")
+                {
+                    Console.Write("Please enter the special request code of the flight (LWTT/DDJB/CFFT) : ");
+                    string? sac = Console.ReadLine();
 
-            // If flight object not created, repeat input prompt
-            if (!created) continue;
+                    flightCreated = CreateSpecialFlightDetails(terminal, flight, flightNumber, origin, destination, expectedTime, sac);
+                }
+                else if (option == "N")
+                {
+                    flightCreated = CreateFlightDetails(terminal, flight, flightNumber, origin, destination, expectedTime);
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid option.");
+                    continue;
+                }
+
+                // If flight object not created, repeat input prompt
+                if (!flightCreated) continue;
+                else break;
+            }
 
             // Checks if there's a special access code, and writes data to flights.csv
             using (StreamWriter diddy = new StreamWriter("flights.csv", true))
@@ -763,8 +772,14 @@ void ModifyFlightDetails(Terminal terminal)
     }
 }
 //------------------ End of Jun Wei's Code -----------------------
+// Task 9
+//----------------------- John's Code ----------------------------
 
-foreach (Flight tempFlight in terminal.Flights.Values)
+void DisplayFlightOrdered(Terminal terminal)
+{
+    SortedList<DateTime, Flight> sortedFlight = new SortedList<DateTime, Flight>();
+
+    foreach (Flight tempFlight in terminal.Flights.Values)
     {
         sortedFlight[tempFlight.ExpectedTime] = tempFlight;
     }
@@ -796,7 +811,7 @@ foreach (Flight tempFlight in terminal.Flights.Values)
             tempFlight.ExpectedTime, tempFlight.Status, gateName);
     }
     Console.WriteLine();
-
+}
 
 //-------------------- End of John's Code ------------------------
 // Program
@@ -858,7 +873,7 @@ while (true)
     }
     else if (option == 7)
     {
-        DisplayFlight(terminal);
+        DisplayFlightOrdered(terminal);
     }
     else if (option == 0)
     {

@@ -1,4 +1,12 @@
-﻿using System;
+﻿//==========================================================
+// Student Number	: S10259166
+// Student Name	: John Gotinga
+
+// Student Number	: S10259029
+// Student Name	: Yap Jun Wei
+//==========================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

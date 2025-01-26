@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-//==========================================================
+﻿//==========================================================
 // Student Number	: S10259166
 // Student Name	: John Gotinga
 // Partner Name	: Yap Jun Wei
 //==========================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Cool_people_only__Please_A__
 {

@@ -1,4 +1,10 @@
-﻿using System;
+﻿//==========================================================
+// Student Number	: S10259029
+// Student Name	: Yap Jun Wei
+// Partner Name	: John Gotinga
+//==========================================================
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

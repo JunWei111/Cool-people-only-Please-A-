@@ -638,137 +638,119 @@ void DisplayAirlineFlights(Terminal terminal)
 //--------------------- Jun Wei's Code ---------------------------
 void ModifyFlightDetails(Terminal terminal)
 {
-    DisplayAirlineFlights(terminal);
-    Console.WriteLine("Choose an existing Flight to modify or delete:");
-    string flightNumber = Console.ReadLine();
-
-    Console.WriteLine("1. Modify Flight");
-    Console.WriteLine("2. Delete Flight");
-    Console.WriteLine("Choose an option:");
-    int option = Convert.ToInt32(Console.ReadLine());
-    if (option == 1)
+    try
     {
-        Console.WriteLine("1. Modify Basic Information");
-        Console.WriteLine("2. Modify Status");
-        Console.WriteLine("3. Modify Special Request Code");
-        Console.WriteLine("4. Modify Boarding Gate");
+        DisplayAirlineFlights(terminal);
+        Console.WriteLine("Choose an existing Flight to modify or delete:");
+        string flightNumber = Console.ReadLine();
+
+        Console.WriteLine("1. Modify Flight");
+        Console.WriteLine("2. Delete Flight");
         Console.WriteLine("Choose an option:");
-        int option2 = Convert.ToInt32(Console.ReadLine());
-        if (!terminal.Flights.ContainsKey(flightNumber))// if the flight number does not exist
-        {
-            Console.WriteLine("Error: Flight number not found.");
-            return;//exit the method        
-        }
-        Flight flight = terminal.Flights[flightNumber];//Give the flight a keyvaluepair that contains the key that matches the user input
-        if (option2 == 1)
-        {
-            Console.Write("Enter new Origin: ");
-            string newOrigin = Console.ReadLine();
-            Console.Write("Enter new Destination: ");
-            string newDestination = Console.ReadLine();
-            Console.Write("Enter new Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
-            DateTime newExpectedTime = Convert.ToDateTime(Console.ReadLine());
+        int option = Convert.ToInt32(Console.ReadLine());
 
-            //Update the flight details in the dictionary
-            flight.Origin = newOrigin;
-            flight.Destination = newDestination;
-            flight.ExpectedTime = newExpectedTime;
-        }
-        else if (option2 == 2)
+        if (option == 1)
         {
-            Console.WriteLine("Enter new status: ");
-            string newstatus = Console.ReadLine();
-            flight.Status = newstatus;
-        }
-        else if (option2 == 3)
-        {
-            Console.WriteLine("Enter new Special Request Code: ");
-            string newSAC = Console.ReadLine();
-            flight.SAC = newSAC;
+            Console.WriteLine("1. Modify Basic Information");
+            Console.WriteLine("2. Modify Status");
+            Console.WriteLine("3. Modify Special Request Code");
+            Console.WriteLine("4. Modify Boarding Gate");
+            Console.WriteLine("Choose an option:");
+            int option2 = Convert.ToInt32(Console.ReadLine());
 
+            if (!terminal.Flights.ContainsKey(flightNumber))
+            {
+                Console.WriteLine("Error: Flight number not found.");
+                return;
+            }
+
+            Flight flight = terminal.Flights[flightNumber];
+
+            if (option2 == 1)
+            {
+                Console.Write("Enter new Origin: ");
+                string newOrigin = Console.ReadLine();
+                Console.Write("Enter new Destination: ");
+                string newDestination = Console.ReadLine();
+                Console.Write("Enter new Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+                DateTime newExpectedTime = Convert.ToDateTime(Console.ReadLine());
+
+                flight.Origin = newOrigin;
+                flight.Destination = newDestination;
+                flight.ExpectedTime = newExpectedTime;
+            }
+            else if (option2 == 2)
+            {
+                Console.WriteLine("Enter new status: ");
+                string newstatus = Console.ReadLine();
+                flight.Status = newstatus;
+            }
+            else if (option2 == 3)
+            {
+                Console.WriteLine("Enter new Special Request Code: ");
+                string newSAC = Console.ReadLine();
+                flight.SAC = newSAC;
+            }
+            else if (option2 == 4)
+            {
+                Console.WriteLine("Enter new Boarding Gate: ");
+                string newGateNo = Console.ReadLine();
+                BoardingGate newGate = new BoardingGate(newGateNo);
+                terminal.BoardingGates[flightNumber] = newGate;
+            }
+            else
+            {
+                Console.WriteLine("Invalid option.");
+                return;
+            }
         }
-        else if (option2 == 4)
+        else if (option == 2)
         {
-            Console.WriteLine("Enter new Boarding Gate: ");
-            string newGateNo = Console.ReadLine();
-            BoardingGate newGate = new BoardingGate(newGateNo); // created a gate class that only accepts a string
-            terminal.BoardingGates[flightNumber] = newGate;
+            if (!terminal.Flights.ContainsKey(flightNumber))
+            {
+                Console.WriteLine("Error: Flight number not found.");
+                return;
+            }
+
+            Console.Write("Confirm deletion [Y/N]: ");
+            string confirmation = Console.ReadLine();
+            if (confirmation.ToUpper() == "Y")
+            {
+                Flight flightToRemove = terminal.Flights[flightNumber];
+                terminal.Flights.Remove(flightNumber);
+                Airline airline = terminal.GetAirlineFromFlight(flightToRemove);
+                if (airline != null && airline.Flights != null)
+                {
+                    airline.Flights.Remove(flightNumber);
+                }
+                if (terminal.BoardingGates.ContainsKey(flightNumber))
+                {
+                    terminal.BoardingGates.Remove(flightNumber);
+                }
+
+                Console.WriteLine($"Flight {flightNumber} has been deleted successfully.");
+            }
+            else if (confirmation.ToUpper() == "N")
+            {
+                Console.WriteLine("Flight deletion cancelled.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid confirmation. Deletion cancelled.");
+            }
         }
         else
         {
             Console.WriteLine("Invalid option.");
-            return; //exit the method
-        }
-        Console.WriteLine("Flight updated!\n");
-        Console.WriteLine("Flight Number: " + flight.FlightNumber);
-        Airline airline = terminal.GetAirlineFromFlight(flight);
-        if (airline != null)
-        {
-            Console.WriteLine("Airline Name: " + airline.Name);
-        }
-        else
-        {
-            Console.WriteLine("Airline Name: Unknown Airline");
-        }
-        Console.WriteLine("Origin: " + flight.Origin);
-        Console.WriteLine("Destination: " + flight.Destination);
-        Console.WriteLine("Expected Departure/Arrival Time: " + flight.ExpectedTime);
-        Console.WriteLine("Status: " + flight.Status);
-        if (flight.SAC != null)
-        {
-            Console.WriteLine("Special Request Code: " + flight.SAC);
-        }
-
-        if (terminal.BoardingGates.ContainsKey(flightNumber))
-        {
-            BoardingGate gate = terminal.BoardingGates[flightNumber]; // Ensure GateNumber is a property of BoardingGate
-            Console.WriteLine("Boarding Gate: " + gate.GateName);
-        }
-        else
-        {
-            Console.WriteLine("Boarding Gate: Unassigned");
         }
     }
-    else if (option == 2)  // WORK IN PROGRESS (need to do try catch errors handling)
+    catch (FormatException)
     {
-        if (!terminal.Flights.ContainsKey(flightNumber)) // Check if flight exists
-        {
-            Console.WriteLine("Error: Flight number not found.");
-            return;
-        }
-        Console.Write("Confirm deletion [Y/N]: ");
-        string confirmation = Console.ReadLine();
-        if (confirmation.ToUpper() == "Y")
-        {
-            // Remove flight from terminal's flights
-            Flight flightToRemove = terminal.Flights[flightNumber];
-            terminal.Flights.Remove(flightNumber);
-            // Remove flight from associated airline's flights
-            Airline airline = terminal.GetAirlineFromFlight(flightToRemove);
-            if (airline != null && airline.Flights != null)
-            {
-                airline.Flights.Remove(flightNumber);
-            }
-            // Remove associated boarding gate if exists
-            if (terminal.BoardingGates.ContainsKey(flightNumber))
-            {
-                terminal.BoardingGates.Remove(flightNumber);
-            }
-
-            Console.WriteLine($"Flight {flightNumber} has been deleted successfully.");
-        }
-        else if (confirmation.ToUpper() == "N")
-        {
-            Console.WriteLine("Flight deletion cancelled.");
-        }
-        else
-        {
-            Console.WriteLine("Invalid confirmation. Deletion cancelled.");
-        }
+        Console.WriteLine("Invalid input. Please enter the correct format.");
     }
-    else
+    catch (Exception ex)
     {
-        Console.WriteLine("Invalid option.");
+        Console.WriteLine($"An error occurred: {ex.Message}");
     }
 }
 //------------------ End of Jun Wei's Code -----------------------
@@ -814,6 +796,7 @@ void DisplayFlightOrdered(Terminal terminal)
 }
 
 //-------------------- End of John's Code ------------------------
+//-------------------- Additional features -----------------------
 // Program
 
 //Make the dictionaries to store data

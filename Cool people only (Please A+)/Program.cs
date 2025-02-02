@@ -67,14 +67,14 @@ void LoadFiles(Dictionary<string, Airline> airlines, Dictionary<string, Boarding
         while ((please = work.ReadLine()) != null)
         {
             //string initialise
-            string[] babygrunk = please.Split(",");
+            string[] tempData = please.Split(",");
             //ensure data has the expected columns
-            if (babygrunk.Length >= 4)
+            if (tempData.Length >= 4)
             {
-                string gate = babygrunk[0];
-                bool DDJB = Convert.ToBoolean(babygrunk[1]);
-                bool CFFT = Convert.ToBoolean(babygrunk[2]);
-                bool LWTT = Convert.ToBoolean(babygrunk[3]);
+                string gate = tempData[0];
+                bool DDJB = Convert.ToBoolean(tempData[1]);
+                bool CFFT = Convert.ToBoolean(tempData[2]);
+                bool LWTT = Convert.ToBoolean(tempData[3]);
                 BoardingGate boardingobj = new BoardingGate(gate, DDJB, CFFT, LWTT);
                 // Add the boardingGate object to the dictionary using its code as the key
                 if (!boardingGates.ContainsKey(gate))
@@ -104,31 +104,31 @@ void InitData(Dictionary<string, Flight> flights)
         while ((please = work.ReadLine()) != null)
         {
             // Splits commas and checks the special request code to make a object
-            string[] daddy = please.Split(",");
-            if (daddy[4] != "")
+            string[] tempData = please.Split(",");
+            if (tempData[4] != "")
             {
-                if (daddy[4] == "LWTT")
+                if (tempData[4] == "LWTT")
                 {
-                    LWTTFlight tempFlight = new LWTTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]), daddy[4]);
+                    LWTTFlight tempFlight = new LWTTFlight(tempData[0], tempData[1], tempData[2], Convert.ToDateTime(tempData[3]), tempData[4]);
                     flights[tempFlight.FlightNumber] = tempFlight;
                     continue;
                 }
-                else if (daddy[4] == "DDJB")
+                else if (tempData[4] == "DDJB")
                 {
-                    DDJBFlight tempFlight = new DDJBFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]), daddy[4]);
+                    DDJBFlight tempFlight = new DDJBFlight(tempData[0], tempData[1], tempData[2], Convert.ToDateTime(tempData[3]), tempData[4]);
                     flights[tempFlight.FlightNumber] = tempFlight;
                     continue;
                 }
-                else if (daddy[4] == "CFFT")
+                else if (tempData[4] == "CFFT")
                 {
-                    CFFTFlight tempFlight = new CFFTFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]), daddy[4]);
+                    CFFTFlight tempFlight = new CFFTFlight(tempData[0], tempData[1], tempData[2], Convert.ToDateTime(tempData[3]), tempData[4]);
                     flights[tempFlight.FlightNumber] = tempFlight;
                     continue;
                 }
             }
             else
             {
-                NORMFlight tempFlight = new NORMFlight(daddy[0], daddy[1], daddy[2], Convert.ToDateTime(daddy[3]));
+                NORMFlight tempFlight = new NORMFlight(tempData[0], tempData[1], tempData[2], Convert.ToDateTime(tempData[3]));
                 flights[tempFlight.FlightNumber] = tempFlight;
                 continue;
             }
@@ -148,9 +148,9 @@ void DisplayFlight(Terminal terminal)
     Console.WriteLine("{0, -15} {1, -20} {2, -20} {3, -17} {4, -28} {5, -14} {6}",
         "Flight Number", "Airline Name", "Origin", "Destination", "Expected Departure/Arrival", "Status", "Boarding Gate");
 
-    foreach (KeyValuePair<string, Flight> crashOut in terminal.Flights)
+    foreach (KeyValuePair<string, Flight> Data in terminal.Flights)
     {
-        Flight tempFlight = crashOut.Value;
+        Flight tempFlight = Data.Value;
 
         // Checks airline name based on flight number
         Airline tempAirline = terminal.GetAirlineFromFlight(tempFlight);
